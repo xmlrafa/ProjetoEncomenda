@@ -3,6 +3,8 @@ package com.zelly.encomendas.encomendasZelly.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Table(name = "usuarios")
 @Entity(name = "usuarioEntity")
 @Getter
@@ -19,7 +21,12 @@ public class usuarioEntity {
     private String Cargo;
     private String username;
     private String password;
-    private com.zelly.encomendas.encomendasZelly.model.enderecoEntity enderecoEntity;
+
+    @Embedded
+    private enderecoEntity endereco;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<encomendaEntity> encomendas;
 
 
 }

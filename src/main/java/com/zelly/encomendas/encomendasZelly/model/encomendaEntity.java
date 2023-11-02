@@ -8,13 +8,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Table(name = "encomendas")
-@Entity(name = "encomendasEntity")
+@Entity(name = "encomendaEntity")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class encomendasEntity {
+public class encomendaEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String status;
@@ -27,5 +27,9 @@ public class encomendasEntity {
     private clienteEntity clienteEntity;
 
     @OneToMany(mappedBy = "encomenda", cascade = CascadeType.ALL)
-    private List<produtoEntity> produto;
+    private List<produtoEntity> produtos;
+
+    @ManyToOne
+    @JoinColumn (name = "usuario_id")
+    private usuarioEntity usuario;
 }

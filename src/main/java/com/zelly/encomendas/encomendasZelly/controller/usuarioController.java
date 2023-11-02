@@ -1,7 +1,7 @@
 package com.zelly.encomendas.encomendasZelly.controller;
 
-import com.zelly.encomendas.encomendasZelly.repository.encomendaRepository;
-import com.zelly.encomendas.encomendasZelly.service.encomenda.dadosListagemEncomendas;
+import com.zelly.encomendas.encomendasZelly.repository.usuarioRepository;
+import com.zelly.encomendas.encomendasZelly.service.usuario.dadosListagemUsuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,14 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/encomenda")
-public class encomendasController {
+@RequestMapping("/usuario")
+public class usuarioController {
     @Autowired
-    private encomendaRepository encomendaRepository;
+    private usuarioRepository usuarioRepository;
 
     @GetMapping
-    public ResponseEntity<Page<dadosListagemEncomendas>> listarEncomendas(@PageableDefault(size=10, sort={"id"})Pageable paginacao){
-        var page = encomendaRepository.findAll(paginacao).map(dadosListagemEncomendas::new);
+    public ResponseEntity<Page<dadosListagemUsuarios>> listarUsuarios(@PageableDefault(size = 10, sort = {"nome"})Pageable paginacao){
+        var page= usuarioRepository.findAll(paginacao).map(dadosListagemUsuarios::new);
         return ResponseEntity.ok(page);
     }
+
 }

@@ -17,9 +17,8 @@ public class clienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nomeCliente;
-
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<encomendasEntity> encomendasEntitiesList;
+    @OneToMany(mappedBy = "clienteEntity", cascade = CascadeType.ALL)
+    private List<encomendaEntity> encomendasEntitiesList;
 
     @Embedded
     private enderecoEntity endereco;
