@@ -17,8 +17,6 @@ public class produtoEntity {
     private String tamanho;
     private String valor;
     private int quantidadeEmEstoque;
-    @ManyToOne
-    @JoinColumn(name = "encomenda_id")
-    private encomendasEntity encomenda;
+
 
 }
