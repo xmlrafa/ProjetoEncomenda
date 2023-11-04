@@ -1,10 +1,13 @@
 package com.zelly.encomendas.encomendasZelly.model;
 
 
+import com.zelly.encomendas.encomendasZelly.service.encomenda.Status;
+import com.zelly.encomendas.encomendasZelly.service.encomenda.dadosCadastroEncomenda;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Table(name = "encomendas")
@@ -17,7 +20,9 @@ import java.util.List;
 public class encomendaEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String status;
+    // TODO: 02/11/2023 O status da encomenda deve ser um ENUM
+    @Enumerated(EnumType.STRING)
+    private Status status;
     private LocalDateTime dataPedido;
     private LocalDateTime dataPrevisaoEntrega;
     private LocalDateTime dataEntrega;
@@ -32,4 +37,13 @@ public class encomendaEntity {
     @ManyToOne
     @JoinColumn (name = "usuario_id")
     private usuarioEntity usuario;
+
+    public encomendaEntity(dadosCadastroEncomenda dados) {
+        this.status = Status.ABERTO;
+        this.dataPedido = LocalDateTime.now();
+        this.dataPrevisaoEntrega = dataPedido.plus(1, ChronoUnit.DAYS);
+        this.clienteEntity = dados.cliente();
+        this.produtos = dados.produto();
+        this.usuario = dados.usuario();
+    }
 }

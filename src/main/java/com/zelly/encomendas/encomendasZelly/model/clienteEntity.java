@@ -1,5 +1,6 @@
 package com.zelly.encomendas.encomendasZelly.model;
 
+import com.zelly.encomendas.encomendasZelly.service.cliente.dadosCadastroCliente;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,4 +24,10 @@ public class clienteEntity {
     @Embedded
     private enderecoEntity endereco;
 
+    public clienteEntity(dadosCadastroCliente dados) {
+        this.nomeCliente = dados.nome();
+        this.endereco = dados.endereco();
+        this.encomendasEntitiesList = dados.encomendasEntitiesList();
+
+    }
 }

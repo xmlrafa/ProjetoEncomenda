@@ -1,5 +1,6 @@
 package com.zelly.encomendas.encomendasZelly.model;
 
+import com.zelly.encomendas.encomendasZelly.service.usuario.dadosCadastroUsuario;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +19,7 @@ public class usuarioEntity {
     private Long id;
     private String nome;
     private Long matricula;
-    private String Cargo;
+    private String cargo;
     private String username;
     private String password;
 
@@ -29,4 +30,12 @@ public class usuarioEntity {
     private List<encomendaEntity> encomendas;
 
 
+    public usuarioEntity(dadosCadastroUsuario dados) {
+        this.nome = dados.nome();
+        this.matricula = dados.matricula();
+        this.cargo = dados.cargo();
+        this.username = dados.username();
+        this.password = dados.password();
+        this.endereco = dados.endereco();
+    }
 }

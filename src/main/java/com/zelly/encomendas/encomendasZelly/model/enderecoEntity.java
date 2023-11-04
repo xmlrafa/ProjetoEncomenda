@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class enderecoEntity {
 
+    /**
+     * eu consigo conectar a uma api do correios para
+     * quando inserir um CEP o endereço carregar automaticamente? **/
     private String logradouro;
     private String bairro;
     private String cep;

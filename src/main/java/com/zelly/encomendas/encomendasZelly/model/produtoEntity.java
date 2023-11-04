@@ -1,5 +1,7 @@
 package com.zelly.encomendas.encomendasZelly.model;
 
+import com.zelly.encomendas.encomendasZelly.service.produto.dadosCadastroProduto;
+import com.zelly.encomendas.encomendasZelly.service.produto.tamanhoRoupa;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +16,9 @@ public class produtoEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String tamanho;
+    // TODO: 02/11/2023  o tamanho deve ser um enum
+    @Enumerated(EnumType.STRING)
+    private tamanhoRoupa tamanho;
     private Double valor;
     private int quantidadeEmEstoque;
 
@@ -22,4 +26,10 @@ public class produtoEntity {
     @JoinColumn(name = "encomenda_id")
     private encomendaEntity encomenda;
 
+    public produtoEntity(dadosCadastroProduto dados) {
+        this.nome = dados.nome();
+        this.tamanho = dados.tamanho();
+        this.valor = dados.valor();
+        this.quantidadeEmEstoque = dados.quantidadeEmEstoque();
+    }
 }
