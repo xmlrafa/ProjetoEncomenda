@@ -5,6 +5,7 @@ import com.zelly.encomendas.encomendasZelly.repository.usuarioRepository;
 import com.zelly.encomendas.encomendasZelly.service.usuario.dadosCadastroUsuario;
 import com.zelly.encomendas.encomendasZelly.service.usuario.dadosDetalhamentoUsuario;
 import com.zelly.encomendas.encomendasZelly.service.usuario.dadosListagemUsuarios;
+import com.zelly.encomendas.encomendasZelly.service.usuario.userService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,8 @@ public class usuarioController {
     @Autowired
     private usuarioRepository usuarioRepository;
 
+
+
     @GetMapping
     public ResponseEntity<Page<dadosListagemUsuarios>> listarUsuarios(@PageableDefault(size = 10, sort = {"nome"})Pageable paginacao){
         var page= usuarioRepository.findAll(paginacao).map(dadosListagemUsuarios::new);
@@ -30,6 +33,7 @@ public class usuarioController {
     @Transactional
     public ResponseEntity cadastrarUsuario(@RequestBody dadosCadastroUsuario dados, UriComponentsBuilder uriComponentsBuilder){
         var usuario = new usuarioEntity(dados);
+        userService.gerarHashSenha(usuario);
         usuarioRepository.save(usuario);
 
         var uri = uriComponentsBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();

@@ -27,7 +27,7 @@ public class autenticacaoController {
     // TODO: 04/11/2023 Ver o que UsernamePasswordAuthenticationTOken faz e o manager.authenticate faz
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados){
-        var authenticationToken = new UsernamePasswordAuthenticationToken(dados.username(), dados.password());
+        var authenticationToken = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
         var authentication = manager.authenticate(authenticationToken);
 
        var tokenJWT = tokenService.gerarToken((usuarioEntity)authentication.getPrincipal());

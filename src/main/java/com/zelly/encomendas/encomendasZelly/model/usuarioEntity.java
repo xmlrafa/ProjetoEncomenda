@@ -71,7 +71,7 @@ public class usuarioEntity implements UserDetails {
         this.nome = dados.nome();
         this.matricula = dados.matricula();
         this.cargo = dados.cargo();
-        this.login = dados.username();
+        this.login = dados.login();
         this.password = dados.password();
         this.endereco = dados.endereco();
     }
