@@ -6,14 +6,15 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.zelly.encomendas.encomendasZelly.model.usuarioEntity;
 import org.springframework.beans.factory.annotation.Value;
 import com.auth0.jwt.algorithms.Algorithm;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-
+@Service
 public class TokenService {
-    @Value("123456")
+    @Value("123456789")
     private String secret;
 
     public String gerarToken(usuarioEntity usuario){
@@ -21,7 +22,7 @@ public class TokenService {
             var algoritmo = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("encomendasZellyAPI")
-                    .withSubject(usuario.getUsername())
+                    .withSubject(usuario.getLogin())
                     .withExpiresAt(dataExpiracao())
                     .sign(algoritmo);
         } catch (JWTCreationException exception){

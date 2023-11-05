@@ -24,7 +24,7 @@ public class usuarioEntity implements UserDetails {
     private String nome;
     private Long matricula;
     private String cargo;
-    private String username;
+    private String login;
     private String password;
 
     @Embedded
@@ -42,12 +42,10 @@ public class usuarioEntity implements UserDetails {
     public String getPassword(){
         return password;
     }
-
     @Override
-    public String getUsername(){
-        return username;
+    public String getUsername() {
+        return login;
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -73,7 +71,7 @@ public class usuarioEntity implements UserDetails {
         this.nome = dados.nome();
         this.matricula = dados.matricula();
         this.cargo = dados.cargo();
-        this.username = dados.username();
+        this.login = dados.username();
         this.password = dados.password();
         this.endereco = dados.endereco();
     }
