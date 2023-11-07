@@ -11,10 +11,9 @@ public record dadosCadastroCliente(
         @NotBlank
         String nome,
         @NotBlank
-        enderecoEntity endereco,
-        List<encomendaEntity> encomendasEntitiesList){
+        enderecoEntity endereco){
 
     public dadosCadastroCliente(clienteEntity cliente) {
-        this(cliente.getNomeCliente(), cliente.getEndereco(), cliente.getEncomendasEntitiesList());
+        this(cliente.getNomeCliente(), cliente.getEndereco());
     }
 }

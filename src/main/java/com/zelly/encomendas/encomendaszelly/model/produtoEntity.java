@@ -22,10 +22,10 @@ public class produtoEntity {
     private Double valor;
     private int quantidadeEmEstoque;
 
-    @ManyToOne
+   /** @ManyToOne
     @JoinColumn(name = "encomenda_id")
     private encomendaEntity encomenda;
-
+**/
     public produtoEntity(dadosCadastroProduto dados) {
         this.nome = dados.nome();
         this.tamanho = dados.tamanho();

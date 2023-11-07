@@ -8,5 +8,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record dadosCadastroEncomenda (
-        Status status, LocalDateTime dataPedido, LocalDateTime dataPrevisaoEntrega, clienteEntity cliente, List<produtoEntity> produto, usuarioEntity usuario) {
+        Status status, LocalDateTime dataPedido, LocalDateTime dataPrevisaoEntrega, clienteEntity Cliente, List<Long> ProdutoIds, usuarioEntity Usuario) {
 }

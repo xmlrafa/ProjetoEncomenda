@@ -18,8 +18,7 @@ public class clienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nomeCliente;
-    @OneToMany(mappedBy = "clienteEntity", cascade = CascadeType.ALL)
-    private List<encomendaEntity> encomendasEntitiesList;
+
 
     @Embedded
     private enderecoEntity endereco;
@@ -27,7 +26,7 @@ public class clienteEntity {
     public clienteEntity(dadosCadastroCliente dados) {
         this.nomeCliente = dados.nome();
         this.endereco = dados.endereco();
-        this.encomendasEntitiesList = dados.encomendasEntitiesList();
+
 
     }
 }
