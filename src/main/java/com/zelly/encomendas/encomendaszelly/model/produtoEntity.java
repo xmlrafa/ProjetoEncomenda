@@ -1,5 +1,6 @@
 package com.zelly.encomendas.encomendaszelly.model;
 
+import com.zelly.encomendas.encomendaszelly.service.produto.dadosAtualizacaoProduto;
 import com.zelly.encomendas.encomendaszelly.service.produto.dadosCadastroProduto;
 import com.zelly.encomendas.encomendaszelly.service.produto.tamanhoRoupa;
 import jakarta.persistence.*;
@@ -31,5 +32,22 @@ public class produtoEntity {
         this.tamanho = dados.tamanho();
         this.valor = dados.valor();
         this.quantidadeEmEstoque = dados.quantidadeEmEstoque();
+    }
+
+    public void atualizarInformacoes(dadosAtualizacaoProduto dados) {
+        if(dados.id() != null){
+            this.id = dados.id();
+        }
+        if(dados.nome() != null){
+            this.nome = dados.nome();
+        }
+        if (dados.tamanho() != null){
+            this.tamanho = dados.tamanho();
+        }
+        if(dados.valor() != null){
+            this.valor = dados.valor();
+        }
+        this.quantidadeEmEstoque = dados.quantidadeEstoque();
+
     }
 }

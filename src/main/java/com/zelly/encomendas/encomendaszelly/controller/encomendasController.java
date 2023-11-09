@@ -30,18 +30,27 @@ public class encomendasController {
 
 
     @GetMapping
-    public ResponseEntity<Page<dadosListagemEncomendas>> listarEncomendas(@PageableDefault(size=10, sort={"id"})Pageable paginacao){
-        var page = encomendaRepository.findAll(paginacao).map(dadosListagemEncomendas::new);
-        return ResponseEntity.ok(page);
+    public Page<encomendaEntity> listarEncomendas(Pageable pageable) {
+        return encomendaService.listarEncomendasPaginadas(pageable);
     }
+
+
 
     @PostMapping
     @Transactional
     public ResponseEntity<encomendaEntity> cadastrarEncomenda(@RequestBody encomendaEntity encomenda){
         encomendaEntity encomendaSalva = encomendaService.salvarEncomenda(encomenda);
         return new ResponseEntity<>(encomendaSalva, HttpStatus.CREATED);
-
     }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity atualizarEncomenda(@RequestBody encomendaEntity encomenda){
+        encomendaEntity encomendaAtualizada = encomendaService.atualizarEncomenda(encomenda.getId(), encomenda.getStatus(), encomenda.getDataEntrega());
+
+        return ResponseEntity.ok(new encomendaEntity(encomendaAtualizada));
+    }
+
 
     @DeleteMapping("/{id}")
     @Transactional

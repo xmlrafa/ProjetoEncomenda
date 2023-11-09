@@ -1,5 +1,6 @@
 package com.zelly.encomendas.encomendaszelly.model;
 
+import com.zelly.encomendas.encomendaszelly.service.usuario.dadosAtualizacaoUsuario;
 import com.zelly.encomendas.encomendaszelly.service.usuario.dadosCadastroUsuario;
 import jakarta.persistence.*;
 import lombok.*;
@@ -74,5 +75,25 @@ public class usuarioEntity implements UserDetails {
         this.login = dados.login();
         this.password = dados.password();
         this.endereco = dados.endereco();
+    }
+    public void atualizarUsuario(dadosAtualizacaoUsuario dados){
+        if (dados.id() != null){
+            this.id = dados.id();
+        }
+        if (dados.nome() != null){
+            this.nome = dados.nome();
+        }
+        if(dados.cargo() != null){
+            this.cargo = dados.cargo();
+        }
+        if(dados.login() != null){
+            this.login = dados.login();
+        }
+        if(dados.password() != null){
+            this.password = dados.password();
+        }
+        if(dados.endereco() != null){
+            this.endereco = dados.endereco();
+        }
     }
 }

@@ -49,5 +49,15 @@ public class encomendaEntity {
     }
 
 
+    public encomendaEntity(encomendaEntity encomendaAtualizada) {
+           this.id = encomendaAtualizada.getId();
+           this.produtos = encomendaAtualizada.getProdutos();
+           this.dataEntrega = encomendaAtualizada.getDataEntrega();
+           this.dataPedido = encomendaAtualizada.getDataPedido();
+           this.usuario = encomendaAtualizada.getUsuario();
+           this.status = encomendaAtualizada.getStatus();
+           this.dataPrevisaoEntrega = encomendaAtualizada.getDataPrevisaoEntrega();
+           this.clienteEntity = encomendaAtualizada.getClienteEntity();
 
+    }
 }

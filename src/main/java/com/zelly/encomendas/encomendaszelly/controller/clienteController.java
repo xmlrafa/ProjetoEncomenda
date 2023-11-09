@@ -2,10 +2,12 @@ package com.zelly.encomendas.encomendaszelly.controller;
 
 import com.zelly.encomendas.encomendaszelly.model.clienteEntity;
 import com.zelly.encomendas.encomendaszelly.repository.clienteRepository;
+import com.zelly.encomendas.encomendaszelly.service.cliente.dadosAtualizacaoCliente;
 import com.zelly.encomendas.encomendaszelly.service.cliente.dadosCadastroCliente;
 import com.zelly.encomendas.encomendaszelly.service.cliente.dadosListagemClientes;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +50,14 @@ public class clienteController {
         clienteRepository.delete(cliente);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity atualizarCliente(@RequestBody @Valid dadosAtualizacaoCliente dados){
+        var cliente = clienteRepository.getReferenceById(dados.id());
+        cliente.atualizarInformacoes(dados);
+        return ResponseEntity.ok(new dadosCadastroCliente(cliente));
     }
 
 }

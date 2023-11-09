@@ -1,5 +1,6 @@
 package com.zelly.encomendas.encomendaszelly.model;
 
+import com.zelly.encomendas.encomendaszelly.service.cliente.dadosAtualizacaoCliente;
 import com.zelly.encomendas.encomendaszelly.service.cliente.dadosCadastroCliente;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,7 +27,17 @@ public class clienteEntity {
     public clienteEntity(dadosCadastroCliente dados) {
         this.nomeCliente = dados.nome();
         this.endereco = dados.endereco();
+    }
 
-
+    public void atualizarInformacoes(dadosAtualizacaoCliente dados){
+        if (dados.id() != null){
+            this.id = dados.id();
+        }
+        if (dados.nome() != null){
+            this.nomeCliente = dados.nome();
+        }
+        if (this.endereco != null){
+            this.endereco = dados.endereco();
+        }
     }
 }

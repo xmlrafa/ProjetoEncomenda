@@ -2,10 +2,8 @@ package com.zelly.encomendas.encomendaszelly.controller;
 
 import com.zelly.encomendas.encomendaszelly.model.usuarioEntity;
 import com.zelly.encomendas.encomendaszelly.repository.usuarioRepository;
-import com.zelly.encomendas.encomendaszelly.service.usuario.dadosCadastroUsuario;
-import com.zelly.encomendas.encomendaszelly.service.usuario.dadosDetalhamentoUsuario;
-import com.zelly.encomendas.encomendaszelly.service.usuario.dadosListagemUsuarios;
-import com.zelly.encomendas.encomendaszelly.service.usuario.userService;
+import com.zelly.encomendas.encomendaszelly.service.produto.dadosCadastroProduto;
+import com.zelly.encomendas.encomendaszelly.service.usuario.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,6 +47,14 @@ public class usuarioController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity atualizarUsuario(@RequestBody dadosAtualizacaoUsuario dados){
+        var usuario = usuarioRepository.getReferenceById(dados.id());
+        usuario.atualizarUsuario(dados);
+
+        return ResponseEntity.ok(new dadosCadastroUsuario(usuario));
+    }
 
 
 }

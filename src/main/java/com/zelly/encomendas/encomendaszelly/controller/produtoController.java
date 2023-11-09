@@ -2,9 +2,11 @@ package com.zelly.encomendas.encomendaszelly.controller;
 
 import com.zelly.encomendas.encomendaszelly.model.produtoEntity;
 import com.zelly.encomendas.encomendaszelly.repository.produtoRepository;
+import com.zelly.encomendas.encomendaszelly.service.produto.dadosAtualizacaoProduto;
 import com.zelly.encomendas.encomendaszelly.service.produto.dadosCadastroProduto;
 import com.zelly.encomendas.encomendaszelly.service.produto.dadosListagemProdutos;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,6 +45,15 @@ public class produtoController {
         produtoRepository.delete(produto);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity atualizarProduto(@RequestBody @Valid dadosAtualizacaoProduto dados){
+        var produto = produtoRepository.getReferenceById(dados.id());
+        produto.atualizarInformacoes(dados);
+
+        return ResponseEntity.ok(new dadosCadastroProduto(produto));
     }
 
 }
