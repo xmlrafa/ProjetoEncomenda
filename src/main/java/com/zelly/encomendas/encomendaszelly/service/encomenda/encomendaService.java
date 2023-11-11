@@ -35,9 +35,12 @@ public class encomendaService {
                     .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o ID: "+ produto.getId()));
             produtos.add(produtoExistente);
         }
+
         encomenda.setClienteEntity(cliente);
         encomenda.setProdutos(produtos);
-
+        if (produtos.isEmpty()){
+            throw new ListaProdutosVazia();
+        }
         return encomendaRepository.save(encomenda);
     }
 

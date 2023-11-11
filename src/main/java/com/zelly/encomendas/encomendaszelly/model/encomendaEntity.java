@@ -1,9 +1,11 @@
 package com.zelly.encomendas.encomendaszelly.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zelly.encomendas.encomendaszelly.service.encomenda.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -23,8 +25,11 @@ public class encomendaEntity {
     private Long id;
     @Enumerated(EnumType.STRING)
     private Status status;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime dataPedido;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime dataPrevisaoEntrega;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime dataEntrega;
 
     @ManyToOne
@@ -41,7 +46,9 @@ public class encomendaEntity {
        public encomendaEntity(){
         this.status = Status.ABERTO;
         this.dataPedido = LocalDateTime.now();
-        this.dataPrevisaoEntrega = dataPedido.plus(1, ChronoUnit.DAYS);
+        this.dataPrevisaoEntrega = dataPedido.plusDays(1);
+
+
     }
     public encomendaEntity(clienteEntity cliente, List<produtoEntity> produtos){
         this.clienteEntity = cliente;

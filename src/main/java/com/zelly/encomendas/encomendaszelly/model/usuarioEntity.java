@@ -25,6 +25,7 @@ public class usuarioEntity implements UserDetails {
     private String nome;
     private Long matricula;
     private String cargo;
+    @Column(unique = true)
     private String login;
     private String password;
 
