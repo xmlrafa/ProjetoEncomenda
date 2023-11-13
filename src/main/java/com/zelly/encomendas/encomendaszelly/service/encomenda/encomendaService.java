@@ -6,6 +6,7 @@ import com.zelly.encomendas.encomendaszelly.model.produtoEntity;
 import com.zelly.encomendas.encomendaszelly.repository.clienteRepository;
 import com.zelly.encomendas.encomendaszelly.repository.encomendaRepository;
 import com.zelly.encomendas.encomendaszelly.repository.produtoRepository;
+import com.zelly.encomendas.encomendaszelly.service.encomenda.validacoes.validadorEncomenda;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,9 @@ public class encomendaService {
     private produtoRepository produtoRepository;
     @Autowired
     private clienteRepository clienteRepository;
+
+    @Autowired
+    private List<validadorEncomenda> validadores;
 
     public encomendaEntity salvarEncomenda(encomendaEntity encomenda){
         clienteEntity cliente = clienteRepository.findById(encomenda.getClienteEntity().getId())
@@ -63,6 +67,8 @@ public class encomendaService {
                     .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o ID: "+ produto.getId()));
             produtos.add(produtoExistente);
         }
+        validadores.forEach(v -> v.validar(encomenda));
+
         encomenda.setClienteEntity(cliente);
         encomenda.setProdutos(produtos);
 
