@@ -39,6 +39,7 @@ public class encomendaService {
                     .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o ID: "+ produto.getId()));
             produtos.add(produtoExistente);
         }
+        validadores.forEach(v -> v.validar(encomenda));
 
         encomenda.setClienteEntity(cliente);
         encomenda.setProdutos(produtos);
@@ -67,7 +68,6 @@ public class encomendaService {
                     .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o ID: "+ produto.getId()));
             produtos.add(produtoExistente);
         }
-        validadores.forEach(v -> v.validar(encomenda));
 
         encomenda.setClienteEntity(cliente);
         encomenda.setProdutos(produtos);

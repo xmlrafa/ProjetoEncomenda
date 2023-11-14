@@ -17,9 +17,9 @@ public class validaQuantidadeLimiteEncomendaDia implements validadorEncomenda {
     @Override
     public void validar(encomendaEntity encomenda) {
         LocalDateTime diaPrevisaoEntrega = LocalDateTime.now();
-       //var quantidadeEncomendas = encomendaRepository.countEncomendasEmAndamento();
-       //long diasPrevisao = quantidadeEncomendas / 10 + 1;
-        encomenda.setDataPrevisaoEntrega(diaPrevisaoEntrega.plusDays(1));
+        var quantidadeEncomendas = encomendaRepository.countEncomendasEmAndamento();
+        int diasPrevisao = quantidadeEncomendas / 10 + 1;
+        encomenda.setDataPrevisaoEntrega(diaPrevisaoEntrega.plusDays(diasPrevisao));
 
         }
     }
