@@ -4,6 +4,7 @@ import com.zelly.encomendas.encomendaszelly.model.encomendaEntity;
 import com.zelly.encomendas.encomendaszelly.repository.clienteRepository;
 import com.zelly.encomendas.encomendaszelly.repository.encomendaRepository;
 import com.zelly.encomendas.encomendaszelly.repository.produtoRepository;
+import com.zelly.encomendas.encomendaszelly.service.encomenda.Status;
 import com.zelly.encomendas.encomendaszelly.service.encomenda.dadosListagemEncomendas;
 import com.zelly.encomendas.encomendaszelly.service.encomenda.encomendaService;
 import jakarta.transaction.Transactional;
@@ -14,6 +15,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/encomenda")
@@ -34,8 +37,18 @@ public class encomendasController {
         return encomendaService.listarEncomendasPaginadas(pageable);
     }
 
-
-
+    @GetMapping("/cliente/{clienteId}")
+    public List<encomendaEntity> buscaPorCliente(@PathVariable Long clienteId){
+        return encomendaRepository.findByClienteId(clienteId);
+    }
+    @GetMapping("/usuario/{usuarioId}")
+    public List<encomendaEntity> buscaPorUsuario(@PathVariable Long usuarioId){
+        return encomendaRepository.findByUsuarioId(usuarioId);
+    }
+    @GetMapping("/status/{status}")
+    public List<encomendaEntity> buscaPorStatus(@PathVariable Status status){
+        return encomendaRepository.findByStatus(status);
+    }
     @PostMapping
     @Transactional
     public ResponseEntity<encomendaEntity> cadastrarEncomenda(@RequestBody encomendaEntity encomenda){
