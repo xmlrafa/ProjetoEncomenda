@@ -5,12 +5,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.zelly.encomendas.encomendaszelly.service.encomenda.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Future;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Table(name = "encomendas")
@@ -35,7 +32,7 @@ public class encomendaEntity {
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     @JsonIgnoreProperties("encomendas")
-    private clienteEntity clienteEntity;
+    private clienteEntity cliente;
 
     @ManyToMany()
     private List<produtoEntity> produtos;
@@ -51,7 +48,7 @@ public class encomendaEntity {
 
     }
     public encomendaEntity(clienteEntity cliente, List<produtoEntity> produtos){
-        this.clienteEntity = cliente;
+        this.cliente = cliente;
         this.produtos = produtos;
     }
 
@@ -64,7 +61,7 @@ public class encomendaEntity {
            this.usuario = encomendaAtualizada.getUsuario();
            this.status = encomendaAtualizada.getStatus();
            this.dataPrevisaoEntrega = encomendaAtualizada.getDataPrevisaoEntrega();
-           this.clienteEntity = encomendaAtualizada.getClienteEntity();
+           this.cliente = encomendaAtualizada.getCliente();
 
     }
 }

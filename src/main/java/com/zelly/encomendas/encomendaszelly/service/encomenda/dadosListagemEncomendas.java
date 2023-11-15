@@ -9,6 +9,6 @@ import java.time.LocalDateTime;
 
 public record dadosListagemEncomendas (Long id, Status status, LocalDateTime dataPedido, LocalDateTime dataPrevisaoEntrega, LocalDateTime dataEntrega, clienteEntity cliente, produtoEntity produtos, usuarioEntity usuario){
     public dadosListagemEncomendas(encomendaEntity encomenda){
-        this(encomenda.getId(), encomenda.getStatus(), encomenda.getDataPedido(), encomenda.getDataPrevisaoEntrega(), encomenda.getDataEntrega(), encomenda.getClienteEntity(), (produtoEntity) encomenda.getProdutos(), encomenda.getUsuario());
+        this(encomenda.getId(), encomenda.getStatus(), encomenda.getDataPedido(), encomenda.getDataPrevisaoEntrega(), encomenda.getDataEntrega(), encomenda.getCliente(), (produtoEntity) encomenda.getProdutos(), encomenda.getUsuario());
     }
 }

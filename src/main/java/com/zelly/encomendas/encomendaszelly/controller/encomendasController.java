@@ -1,5 +1,7 @@
 package com.zelly.encomendas.encomendaszelly.controller;
 
+import com.zelly.encomendas.encomendaszelly.exception.ValidacaoException;
+import com.zelly.encomendas.encomendaszelly.model.clienteEntity;
 import com.zelly.encomendas.encomendaszelly.model.encomendaEntity;
 import com.zelly.encomendas.encomendaszelly.repository.clienteRepository;
 import com.zelly.encomendas.encomendaszelly.repository.encomendaRepository;
@@ -39,7 +41,8 @@ public class encomendasController {
 
     @GetMapping("/cliente/{clienteId}")
     public List<encomendaEntity> buscaPorCliente(@PathVariable Long clienteId){
-        return encomendaRepository.findByClienteId(clienteId);
+        clienteEntity cliente = clienteRepository.findById(clienteId).orElseThrow(()-> new ValidacaoException("Cliente não encontrado com o id: "+clienteId));
+        return encomendaRepository.findByCliente(cliente);
     }
     @GetMapping("/usuario/{usuarioId}")
     public List<encomendaEntity> buscaPorUsuario(@PathVariable Long usuarioId){

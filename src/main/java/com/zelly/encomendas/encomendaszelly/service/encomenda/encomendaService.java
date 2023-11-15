@@ -30,8 +30,8 @@ public class encomendaService {
     private List<validadorEncomenda> validadores;
 
     public encomendaEntity salvarEncomenda(encomendaEntity encomenda){
-        clienteEntity cliente = clienteRepository.findById(encomenda.getClienteEntity().getId())
-                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com o ID" + encomenda.getClienteEntity().getId()));
+        clienteEntity cliente = clienteRepository.findById(encomenda.getCliente().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com o ID" + encomenda.getCliente().getId()));
 
         List<produtoEntity> produtos = new ArrayList<>();
         for (produtoEntity produto:encomenda.getProdutos()){
@@ -41,7 +41,7 @@ public class encomendaService {
         }
         validadores.forEach(v -> v.validar(encomenda));
 
-        encomenda.setClienteEntity(cliente);
+        encomenda.setCliente(cliente);
         encomenda.setProdutos(produtos);
         if (produtos.isEmpty()){
             throw new ListaProdutosVazia();
@@ -59,8 +59,8 @@ public class encomendaService {
             encomenda.setDataEntrega(dataEntrega);
         }
 
-        clienteEntity cliente = clienteRepository.findById(encomenda.getClienteEntity().getId())
-                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com o ID" + encomenda.getClienteEntity().getId()));
+        clienteEntity cliente = clienteRepository.findById(encomenda.getCliente().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com o ID" + encomenda.getCliente().getId()));
 
         List<produtoEntity> produtos = new ArrayList<>();
         for (produtoEntity produto:encomenda.getProdutos()){
@@ -69,7 +69,7 @@ public class encomendaService {
             produtos.add(produtoExistente);
         }
 
-        encomenda.setClienteEntity(cliente);
+        encomenda.setCliente(cliente);
         encomenda.setProdutos(produtos);
 
         return encomendaRepository.save(encomenda);
