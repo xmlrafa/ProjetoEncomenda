@@ -38,6 +38,7 @@ public class encomendaEntity {
     private List<produtoEntity> produtos;
 
     @ManyToOne
+    @JsonIgnoreProperties("encomendas")
     private usuarioEntity usuario;
 
        public encomendaEntity(){

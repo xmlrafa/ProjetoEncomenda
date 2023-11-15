@@ -3,9 +3,11 @@ package com.zelly.encomendas.encomendaszelly.service.encomenda;
 import com.zelly.encomendas.encomendaszelly.model.clienteEntity;
 import com.zelly.encomendas.encomendaszelly.model.encomendaEntity;
 import com.zelly.encomendas.encomendaszelly.model.produtoEntity;
+import com.zelly.encomendas.encomendaszelly.model.usuarioEntity;
 import com.zelly.encomendas.encomendaszelly.repository.clienteRepository;
 import com.zelly.encomendas.encomendaszelly.repository.encomendaRepository;
 import com.zelly.encomendas.encomendaszelly.repository.produtoRepository;
+import com.zelly.encomendas.encomendaszelly.repository.usuarioRepository;
 import com.zelly.encomendas.encomendaszelly.service.encomenda.validacoes.validadorEncomenda;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +29,17 @@ public class encomendaService {
     private clienteRepository clienteRepository;
 
     @Autowired
+    usuarioRepository usuarioRepository;
+
+    @Autowired
     private List<validadorEncomenda> validadores;
 
-    public encomendaEntity salvarEncomenda(encomendaEntity encomenda){
+    public encomendaEntity salvarEncomenda(encomendaEntity encomenda, Long userId){
         clienteEntity cliente = clienteRepository.findById(encomenda.getCliente().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com o ID" + encomenda.getCliente().getId()));
+
+        usuarioEntity usuario = usuarioRepository.findById(userId)
+                .orElseThrow(()-> new EntityNotFoundException("Usuario nao encontrado com o ID" + userId));
 
         List<produtoEntity> produtos = new ArrayList<>();
         for (produtoEntity produto:encomenda.getProdutos()){
@@ -43,6 +51,8 @@ public class encomendaService {
 
         encomenda.setCliente(cliente);
         encomenda.setProdutos(produtos);
+        encomenda.setUsuario(usuario);
+
         if (produtos.isEmpty()){
             throw new ListaProdutosVazia();
         }

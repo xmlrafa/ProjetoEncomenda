@@ -1,5 +1,6 @@
 package com.zelly.encomendas.encomendaszelly.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zelly.encomendas.encomendaszelly.service.usuario.dadosAtualizacaoUsuario;
 import com.zelly.encomendas.encomendaszelly.service.usuario.dadosCadastroUsuario;
 import jakarta.persistence.*;
@@ -26,44 +27,54 @@ public class usuarioEntity implements UserDetails {
     private Long matricula;
     private String cargo;
     @Column(unique = true)
+    @JsonIgnore
     private String login;
+    @JsonIgnore
     private String password;
 
     @Embedded
+    @JsonIgnore
     private enderecoEntity endereco;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<encomendaEntity> encomendas;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
+    @JsonIgnore
     public String getPassword(){
         return password;
     }
     @Override
+    @JsonIgnore
     public String getUsername() {
         return login;
     }
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }
