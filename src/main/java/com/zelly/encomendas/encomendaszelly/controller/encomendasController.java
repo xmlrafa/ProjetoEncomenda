@@ -57,6 +57,7 @@ public class encomendasController {
     @PostMapping
     @Transactional
     public ResponseEntity<encomendaEntity> cadastrarEncomenda(@RequestBody encomendaEntity encomenda, Authentication authentication){
+        // TODO: 18/11/2023 salvar log 
         Long userId = ((usuarioEntity)authentication.getPrincipal()).getId();
         encomendaEntity encomendaSalva = encomendaService.salvarEncomenda(encomenda, userId);
         return new ResponseEntity<>(encomendaSalva, HttpStatus.CREATED);

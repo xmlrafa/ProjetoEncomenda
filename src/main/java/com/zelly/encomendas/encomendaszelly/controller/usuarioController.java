@@ -30,6 +30,8 @@ public class usuarioController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrarUsuario(@RequestBody dadosCadastroUsuario dados, UriComponentsBuilder uriComponentsBuilder){
+        // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log 
+// TODO: 18/11/2023 criar um service para salvar o usuário 
         var usuario = new usuarioEntity(dados);
         userService.gerarHashSenha(usuario);
         usuarioRepository.save(usuario);
@@ -41,6 +43,8 @@ public class usuarioController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity excluirUsuario(@PathVariable Long id){
+        // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log 
+// TODO: 18/11/2023 criar um service para deletar o usuário 
         var usuario = usuarioRepository.getReferenceById(id);
         usuarioRepository.delete(usuario);
 
@@ -50,6 +54,8 @@ public class usuarioController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity atualizarUsuario(@RequestBody dadosAtualizacaoUsuario dados){
+        // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log 
+// TODO: 18/11/2023 criar um service para atualizar o usuario 
         var usuario = usuarioRepository.getReferenceById(dados.id());
         usuario.atualizarUsuario(dados);
 

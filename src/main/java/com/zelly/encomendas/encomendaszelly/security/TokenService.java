@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.zelly.encomendas.encomendaszelly.model.usuarioEntity;
+import com.zelly.encomendas.encomendaszelly.service.log.LogService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.stereotype.Service;
@@ -16,16 +18,19 @@ import java.time.ZoneOffset;
 public class TokenService {
     @Value("123456789")
     private String secret;
+    private LogService log;
 
     public String gerarToken(usuarioEntity usuario){
         try {
             var algoritmo = Algorithm.HMAC256(secret);
+            //log.salvarLog("Um token foi gerado para o usuário: "+ usuario.getUsername());
             return JWT.create()
                     .withIssuer("encomendasZellyAPI")
                     .withSubject(usuario.getLogin())
                     .withClaim("id", usuario.getId())
                     .withExpiresAt(dataExpiracao())
                     .sign(algoritmo);
+
         } catch (JWTCreationException exception){
             throw new RuntimeException("Erro ao gerar token!");
         }

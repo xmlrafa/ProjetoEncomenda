@@ -30,6 +30,8 @@ public class produtoController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrarProduto(@RequestBody dadosCadastroProduto dados, UriComponentsBuilder uriComponentsBuilder){
+        // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log 
+// TODO: 18/11/2023 criar um service para salvar o produto 
         var produto = new produtoEntity(dados);
         produtoRepository.save(produto);
 
@@ -41,6 +43,8 @@ public class produtoController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity deletarProduto(@PathVariable Long id){
+        // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log 
+// TODO: 18/11/2023 criar um service para deletar o produto 
         var produto = produtoRepository.getReferenceById(id);
         produtoRepository.delete(produto);
 
@@ -50,6 +54,8 @@ public class produtoController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity atualizarProduto(@RequestBody @Valid dadosAtualizacaoProduto dados){
+        // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log 
+// TODO: 18/11/2023 criar um service para editar o produto 
         var produto = produtoRepository.getReferenceById(dados.id());
         produto.atualizarInformacoes(dados);
 

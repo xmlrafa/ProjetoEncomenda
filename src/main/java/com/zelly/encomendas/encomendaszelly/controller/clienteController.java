@@ -2,12 +2,12 @@ package com.zelly.encomendas.encomendaszelly.controller;
 
 import com.zelly.encomendas.encomendaszelly.model.clienteEntity;
 import com.zelly.encomendas.encomendaszelly.repository.clienteRepository;
+import com.zelly.encomendas.encomendaszelly.service.cliente.clienteService;
 import com.zelly.encomendas.encomendaszelly.service.cliente.dadosAtualizacaoCliente;
 import com.zelly.encomendas.encomendaszelly.service.cliente.dadosCadastroCliente;
 import com.zelly.encomendas.encomendaszelly.service.cliente.dadosListagemClientes;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +22,9 @@ public class clienteController {
     @Autowired
     private clienteRepository clienteRepository;
 
+    @Autowired
+    private clienteService clienteService;
+
     @GetMapping
     public ResponseEntity<Page<dadosListagemClientes>> listarClientes(@PageableDefault(size=10, sort={"id"}) Pageable paginacao){
         var page = clienteRepository.findAll(paginacao).map(dadosListagemClientes::new);
@@ -35,16 +38,19 @@ public class clienteController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid dadosCadastroCliente dados, UriComponentsBuilder uriBuilder){
+        // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log
+        clienteService.salvar(dados);
         var cliente = new clienteEntity(dados);
-        clienteRepository.save(cliente);
-
         var uri = uriBuilder.path("/cliente/{id}").buildAndExpand(cliente.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new dadosCadastroCliente(cliente));
+
     }
 
     @DeleteMapping("/{id}")
     @Transactional
+    // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log
+
     public ResponseEntity excluirClienteFisico(@PathVariable Long id){
         var cliente = clienteRepository.getReferenceById(id);
         clienteRepository.delete(cliente);
@@ -54,6 +60,8 @@ public class clienteController {
 
     @PutMapping("/{id}")
     @Transactional
+    // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log
+
     public ResponseEntity atualizarCliente(@RequestBody @Valid dadosAtualizacaoCliente dados){
         var cliente = clienteRepository.getReferenceById(dados.id());
         cliente.atualizarInformacoes(dados);
