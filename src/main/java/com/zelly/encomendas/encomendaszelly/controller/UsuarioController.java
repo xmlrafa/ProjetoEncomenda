@@ -16,15 +16,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/usuario")
-public class usuarioController {
-    @Autowired
+public class UsuarioController {
     private usuarioRepository usuarioRepository;
 
     private UsuarioService usuarioService;
 
     @Autowired
-    public usuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, usuarioRepository usuarioRepository) {
         this.usuarioService = usuarioService;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @GetMapping
@@ -42,7 +42,7 @@ public class usuarioController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity excluirUsuario(@PathVariable Long id, Authentication authentication) {
+    public ResponseEntity<usuarioEntity> excluirUsuario(@PathVariable Long id, Authentication authentication) {
         usuarioService.excluirUsuario(id, authentication);
         return ResponseEntity.noContent().build();
     }
@@ -50,7 +50,7 @@ public class usuarioController {
     @PutMapping()
     @Transactional
     public ResponseEntity<dadosDetalhamentoUsuario> atualizarUsuario(@RequestBody dadosAtualizacaoUsuario dados, Authentication authentication) {
-        var usuario = usuarioService.atualizarUsuario(dados, authentication); //usuarioRepository.getReferenceById(dados.id());
+        var usuario = usuarioService.atualizarUsuario(dados, authentication);
         return ResponseEntity.ok(usuario);
     }
 }
