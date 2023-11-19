@@ -15,7 +15,7 @@ public class clienteService {
     public void salvar(dadosCadastroCliente dados) {
         var cliente = new clienteEntity(dados);
         clienteRepository.save(cliente);
-        logService.salvarLog("Um cliente ");
+        //logService.salvarLog("Um cliente ");
 
     }
 }

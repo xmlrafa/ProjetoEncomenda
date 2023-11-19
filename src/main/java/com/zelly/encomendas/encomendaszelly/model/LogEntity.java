@@ -18,10 +18,14 @@ public class LogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String descricao;
+    private String acao;
     private LocalDateTime dataAcao;
+
     @ManyToOne
     @JsonIgnoreProperties("log")
     private usuarioEntity usuario;
+
+    private String entidade;
+
 
 }

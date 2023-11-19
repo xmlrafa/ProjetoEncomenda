@@ -25,25 +25,40 @@ public class UsuarioService {
         String hashSenha = BCrypt.hashpw(usuario.getPassword(), BCrypt.gensalt(12));
         usuario.setPassword(hashSenha);
     }
-
-    public void excluirUsuario(Long id) {
-        usuarioEntity usuario = usuarioRepository.getReferenceById(id);
-        usuarioRepository.delete(usuario);
-    }
-
-    public usuarioEntity atualizarUsuario(dadosAtualizacaoUsuario dados) {
-        usuarioEntity usuario = usuarioRepository.getReferenceById(dados.id());
-        return usuarioRepository.save(usuario);
-    }
-
     public dadosDetalhamentoUsuario cadastrarUsuario(dadosCadastroUsuario dados, Authentication authentication) {
         Long userId = ((usuarioEntity)authentication.getPrincipal()).getId();
         var usuario = new usuarioEntity(dados);
         UsuarioService.gerarHashSenha(usuario);
         usuarioRepository.save(usuario);
-        logService.salvarLog("teste salvar log");
+
+        String nomeEntidade = this.getClass().getSimpleName();
+        usuarioEntity usuarioDaAcao = usuarioRepository.getReferenceById(userId);
+
+        logService.salvarLog("Usuario cadastrado: "+ usuario.getUsername(), nomeEntidade, usuarioDaAcao);
         return new dadosDetalhamentoUsuario(usuario);
     }
+    public void excluirUsuario(Long id, Authentication authentication) {
+        Long userId = ((usuarioEntity)authentication.getPrincipal()).getId();
+        usuarioEntity usuario = usuarioRepository.getReferenceById(id);
+        String nomeEntidade = this.getClass().getSimpleName();
+        usuarioEntity usuarioDaAcao = usuarioRepository.getReferenceById(userId);
+        logService.salvarLog("Usuario excluido: "+ usuario.getUsername(), nomeEntidade, usuarioDaAcao);
+
+        usuarioRepository.delete(usuario);
+    }
+
+    public dadosDetalhamentoUsuario atualizarUsuario(dadosAtualizacaoUsuario dados, Authentication authentication) {
+        Long userId = ((usuarioEntity)authentication.getPrincipal()).getId();
+        usuarioEntity usuario = usuarioRepository.getReferenceById(dados.id());
+        usuario.atualizarUsuario(dados);
+        String nomeEntidade = this.getClass().getSimpleName();
+        usuarioEntity usuarioDaAcao = usuarioRepository.getReferenceById(userId);
+        logService.salvarLog("Usuario atualizado: "+ usuario.getUsername(), nomeEntidade, usuarioDaAcao);
+        usuarioRepository.save(usuario);
+        return new dadosDetalhamentoUsuario(usuario);
+    }
+
+
 
 
     public List<usuarioEntity> listarTodos() {

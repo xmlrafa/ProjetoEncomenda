@@ -1,6 +1,8 @@
 package com.zelly.encomendas.encomendaszelly.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.zelly.encomendas.encomendaszelly.service.usuario.dadosAtualizacaoUsuario;
 import com.zelly.encomendas.encomendaszelly.service.usuario.dadosCadastroUsuario;
 import jakarta.persistence.*;
@@ -29,6 +31,7 @@ public class usuarioEntity implements UserDetails {
     @Column(unique = true)
     @JsonIgnore
     private String login;
+
     @JsonIgnore
     private String password;
 
