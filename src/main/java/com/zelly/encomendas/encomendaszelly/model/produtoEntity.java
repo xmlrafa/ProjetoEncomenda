@@ -21,7 +21,7 @@ public class produtoEntity {
     @Enumerated(EnumType.STRING)
     private tamanhoRoupa tamanho;
     private Double valor;
-    private int quantidadeEmEstoque;
+    private Long quantidadeEmEstoque;
 
    /** @ManyToOne
     @JoinColumn(name = "encomenda_id")
@@ -47,7 +47,8 @@ public class produtoEntity {
         if(dados.valor() != null){
             this.valor = dados.valor();
         }
-        this.quantidadeEmEstoque = dados.quantidadeEstoque();
-
+        if(dados.quantidadeEstoque() >= 0) {
+            this.quantidadeEmEstoque = dados.quantidadeEstoque();
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.zelly.encomendas.encomendaszelly.controller;
 
 import com.zelly.encomendas.encomendaszelly.model.produtoEntity;
 import com.zelly.encomendas.encomendaszelly.repository.produtoRepository;
+import com.zelly.encomendas.encomendaszelly.service.produto.ProdutoService;
 import com.zelly.encomendas.encomendaszelly.service.produto.dadosAtualizacaoProduto;
 import com.zelly.encomendas.encomendaszelly.service.produto.dadosCadastroProduto;
 import com.zelly.encomendas.encomendaszelly.service.produto.dadosListagemProdutos;
@@ -11,15 +12,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/produto")
 public class produtoController {
-    @Autowired
     private produtoRepository produtoRepository;
+    private ProdutoService produtoService;
+    @Autowired
+    public produtoController(produtoRepository produtoRepository, ProdutoService produtoService){
+        this.produtoRepository = produtoRepository;
+        this.produtoService = produtoService;
+    }
+
 
     @GetMapping
     public ResponseEntity<Page<dadosListagemProdutos>> listarProdutos(@PageableDefault(size=10, sort={"id"}) Pageable paginacao){
@@ -29,37 +38,23 @@ public class produtoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrarProduto(@RequestBody dadosCadastroProduto dados, UriComponentsBuilder uriComponentsBuilder){
-        // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log 
-// TODO: 18/11/2023 criar um service para salvar o produto 
-        var produto = new produtoEntity(dados);
-        produtoRepository.save(produto);
-
-        var uri = uriComponentsBuilder.path("/produto/{id}").buildAndExpand(produto.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new dadosCadastroProduto(produto));
+    public ResponseEntity cadastrarProduto(@RequestBody dadosCadastroProduto dados, Authentication authentication, UriComponentsBuilder uriComponentsBuilder){
+        produtoService.cadastrarProduto(dados, authentication, uriComponentsBuilder);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity deletarProduto(@PathVariable Long id){
-        // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log 
-// TODO: 18/11/2023 criar um service para deletar o produto 
-        var produto = produtoRepository.getReferenceById(id);
-        produtoRepository.delete(produto);
-
+    public ResponseEntity deletarProduto(@PathVariable Long id, Authentication authentication){
+        produtoService.deletarProduto(id, authentication);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping()
     @Transactional
-    public ResponseEntity atualizarProduto(@RequestBody @Valid dadosAtualizacaoProduto dados){
-        // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log 
-// TODO: 18/11/2023 criar um service para editar o produto 
-        var produto = produtoRepository.getReferenceById(dados.id());
-        produto.atualizarInformacoes(dados);
-
-        return ResponseEntity.ok(new dadosCadastroProduto(produto));
+    public ResponseEntity<dadosCadastroProduto> atualizarProduto(@RequestBody @Valid dadosAtualizacaoProduto dados, Authentication authentication){
+        var produto = produtoService.editarProduto(dados, authentication);
+        return ResponseEntity.ok(produto);
     }
 
 }

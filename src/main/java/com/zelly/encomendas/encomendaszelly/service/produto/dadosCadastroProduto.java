@@ -9,9 +9,9 @@ public record dadosCadastroProduto(
         String nome,
         @NotNull
         tamanhoRoupa tamanho,
-        @NotBlank
+        @NotNull
         Double valor,
-        int quantidadeEmEstoque) {
+        Long quantidadeEmEstoque) {
     public dadosCadastroProduto(produtoEntity produto) {
         this(produto.getNome(), produto.getTamanho(), produto.getValor(), produto.getQuantidadeEmEstoque());
     }

@@ -1,27 +1,53 @@
 package com.zelly.encomendas.encomendaszelly.service.produto;
 
 import com.zelly.encomendas.encomendaszelly.model.produtoEntity;
+import com.zelly.encomendas.encomendaszelly.model.usuarioEntity;
 import com.zelly.encomendas.encomendaszelly.repository.produtoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zelly.encomendas.encomendaszelly.repository.usuarioRepository;
+import com.zelly.encomendas.encomendaszelly.service.log.LogService;
+import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 public class ProdutoService {
-    @Autowired
     private produtoRepository produtoRepository;
+    private LogService logService;
+    private usuarioRepository usuarioRepository;
 
-    public produtoEntity buscarProdutoPorId(Long id) {
-        Optional<produtoEntity> produtoOptional = produtoRepository.findById(id);
+    public ProdutoService(produtoRepository produtoRepository, LogService logService, usuarioRepository usuarioRepository){
+        this.produtoRepository = produtoRepository;
+        this.logService = logService;
+        this.usuarioRepository = usuarioRepository;
+    }
+    public void cadastrarProduto(dadosCadastroProduto dados, Authentication authentication, UriComponentsBuilder uriComponentsBuilder) {
+        var produto = new produtoEntity(dados);
+        produtoRepository.save(produto);
+        uriComponentsBuilder.path("/produto/{id}").buildAndExpand(produto.getId()).toUri();
+        String nomeEntidade = this.getClass().getSimpleName();
+        Long userId = ((usuarioEntity)authentication.getPrincipal()).getId();
+        usuarioEntity usuario = usuarioRepository.getReferenceById(userId);
+        logService.salvarLog("Produto cadastrado: "+produto.getNome(), nomeEntidade, usuario);
+    }
 
-        if (produtoOptional.isPresent()) {
-            return produtoOptional.get();
-        } else {
-            // Lide com a situação em que o produto com o ID fornecido não foi encontrado
-            // Pode lançar uma exceção ou retornar um valor padrão, dependendo do seu caso de uso
-           //throw new Exception(msg, "Produto com ID " + id + " não encontrado.");
-            return null;
-        }
+    public dadosCadastroProduto editarProduto(@Valid dadosAtualizacaoProduto dados, Authentication authentication) {
+        var produto = produtoRepository.getReferenceById(dados.id());
+        produto.atualizarInformacoes(dados);
+
+        String nomeEntidade = this.getClass().getSimpleName();
+        Long userId = ((usuarioEntity)authentication.getPrincipal()).getId();
+        usuarioEntity usuario = usuarioRepository.getReferenceById(userId);
+        logService.salvarLog("Produto editado: "+produto.getNome(), nomeEntidade, usuario);
+        return new dadosCadastroProduto(produto);
+    }
+
+    public void deletarProduto(Long id, Authentication authentication) {
+        var produto = produtoRepository.getReferenceById(id);
+        String nomeEntidade = this.getClass().getSimpleName();
+        Long userId = ((usuarioEntity)authentication.getPrincipal()).getId();
+        usuarioEntity usuario = usuarioRepository.getReferenceById(userId);
+        logService.salvarLog("Produto cadastrado: "+produto.getNome(), nomeEntidade, usuario);
+        produtoRepository.delete(produto);
     }
 }
