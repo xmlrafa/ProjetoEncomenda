@@ -1,6 +1,6 @@
 package com.zelly.encomendas.encomendaszelly.controller;
 
-import com.zelly.encomendas.encomendaszelly.model.usuarioEntity;
+import com.zelly.encomendas.encomendaszelly.model.UsuarioEntity;
 import com.zelly.encomendas.encomendaszelly.security.DadosTokenJWT;
 import com.zelly.encomendas.encomendaszelly.security.TokenService;
 import com.zelly.encomendas.encomendaszelly.service.usuario.DadosAutenticacao;
@@ -34,7 +34,7 @@ public class AutenticacaoController {
         var authenticationToken = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
         var authentication = manager.authenticate(authenticationToken);
 
-       var tokenJWT = tokenService.gerarToken((usuarioEntity)authentication.getPrincipal());
+       var tokenJWT = tokenService.gerarToken((UsuarioEntity)authentication.getPrincipal());
 
        return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
     }

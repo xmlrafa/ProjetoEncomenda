@@ -1,6 +1,6 @@
 package com.zelly.encomendas.encomendaszelly.service.usuario;
 
-import com.zelly.encomendas.encomendaszelly.model.usuarioEntity;
+import com.zelly.encomendas.encomendaszelly.model.UsuarioEntity;
 import com.zelly.encomendas.encomendaszelly.repository.usuarioRepository;
 import com.zelly.encomendas.encomendaszelly.service.log.LogService;
 import org.mindrot.jbcrypt.BCrypt;
@@ -21,38 +21,38 @@ public class UsuarioService {
     }
 
 
-    public static void gerarHashSenha(usuarioEntity usuario) {
+    public static void gerarHashSenha(UsuarioEntity usuario) {
         String hashSenha = BCrypt.hashpw(usuario.getPassword(), BCrypt.gensalt(12));
         usuario.setPassword(hashSenha);
     }
     public dadosDetalhamentoUsuario cadastrarUsuario(dadosCadastroUsuario dados, Authentication authentication) {
-        Long userId = ((usuarioEntity)authentication.getPrincipal()).getId();
-        var usuario = new usuarioEntity(dados);
+        Long userId = ((UsuarioEntity)authentication.getPrincipal()).getId();
+        var usuario = new UsuarioEntity(dados);
         UsuarioService.gerarHashSenha(usuario);
         usuarioRepository.save(usuario);
 
         String nomeEntidade = this.getClass().getSimpleName();
-        usuarioEntity usuarioDaAcao = usuarioRepository.getReferenceById(userId);
+        UsuarioEntity usuarioDaAcao = usuarioRepository.getReferenceById(userId);
 
         logService.salvarLog("Usuario cadastrado: "+ usuario.getUsername(), nomeEntidade, usuarioDaAcao);
         return new dadosDetalhamentoUsuario(usuario);
     }
     public void excluirUsuario(Long id, Authentication authentication) {
-        Long userId = ((usuarioEntity)authentication.getPrincipal()).getId();
-        usuarioEntity usuario = usuarioRepository.getReferenceById(id);
+        Long userId = ((UsuarioEntity)authentication.getPrincipal()).getId();
+        UsuarioEntity usuario = usuarioRepository.getReferenceById(id);
         String nomeEntidade = this.getClass().getSimpleName();
-        usuarioEntity usuarioDaAcao = usuarioRepository.getReferenceById(userId);
+        UsuarioEntity usuarioDaAcao = usuarioRepository.getReferenceById(userId);
         logService.salvarLog("Usuario excluido: "+ usuario.getUsername(), nomeEntidade, usuarioDaAcao);
 
         usuarioRepository.delete(usuario);
     }
 
-    public dadosDetalhamentoUsuario atualizarUsuario(dadosAtualizacaoUsuario dados, Authentication authentication) {
-        Long userId = ((usuarioEntity)authentication.getPrincipal()).getId();
-        usuarioEntity usuario = usuarioRepository.getReferenceById(dados.id());
+    public dadosDetalhamentoUsuario atualizarUsuario(DadosAtualizacaoUsuario dados, Authentication authentication) {
+        Long userId = ((UsuarioEntity)authentication.getPrincipal()).getId();
+        UsuarioEntity usuario = usuarioRepository.getReferenceById(dados.id());
         usuario.atualizarUsuario(dados);
         String nomeEntidade = this.getClass().getSimpleName();
-        usuarioEntity usuarioDaAcao = usuarioRepository.getReferenceById(userId);
+        UsuarioEntity usuarioDaAcao = usuarioRepository.getReferenceById(userId);
         logService.salvarLog("Usuario atualizado: "+ usuario.getUsername(), nomeEntidade, usuarioDaAcao);
         usuarioRepository.save(usuario);
         return new dadosDetalhamentoUsuario(usuario);
@@ -61,7 +61,7 @@ public class UsuarioService {
 
 
 
-    public List<usuarioEntity> listarTodos() {
+    public List<UsuarioEntity> listarTodos() {
                 return usuarioRepository.findAll();
     }
 }

@@ -35,11 +35,11 @@ public class encomendaEntity {
     private clienteEntity cliente;
 
     @ManyToMany()
-    private List<produtoEntity> produtos;
+    private List<ProdutoEntity> produtos;
 
     @ManyToOne
     @JsonIgnoreProperties("encomendas")
-    private usuarioEntity usuario;
+    private UsuarioEntity usuario;
 
        public encomendaEntity(){
         this.status = Status.ABERTO;
@@ -48,7 +48,7 @@ public class encomendaEntity {
 
 
     }
-    public encomendaEntity(clienteEntity cliente, List<produtoEntity> produtos){
+    public encomendaEntity(clienteEntity cliente, List<ProdutoEntity> produtos){
         this.cliente = cliente;
         this.produtos = produtos;
     }

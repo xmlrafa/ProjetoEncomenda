@@ -1,9 +1,7 @@
 package com.zelly.encomendas.encomendaszelly.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.zelly.encomendas.encomendaszelly.service.usuario.dadosAtualizacaoUsuario;
+import com.zelly.encomendas.encomendaszelly.service.usuario.DadosAtualizacaoUsuario;
 import com.zelly.encomendas.encomendaszelly.service.usuario.dadosCadastroUsuario;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class usuarioEntity implements UserDetails {
+public class UsuarioEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,10 +35,10 @@ public class usuarioEntity implements UserDetails {
 
     @Embedded
     @JsonIgnore
-    private enderecoEntity endereco;
+    private transient enderecoEntity endereco;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<encomendaEntity> encomendas;
+    private transient List<encomendaEntity> encomendas;
 
     @Override
     @JsonIgnore
@@ -83,7 +81,7 @@ public class usuarioEntity implements UserDetails {
     }
 
 
-    public usuarioEntity(dadosCadastroUsuario dados) {
+    public UsuarioEntity(dadosCadastroUsuario dados) {
         this.nome = dados.nome();
         this.matricula = dados.matricula();
         this.cargo = dados.cargo();
@@ -91,7 +89,7 @@ public class usuarioEntity implements UserDetails {
         this.password = dados.password();
         this.endereco = dados.endereco();
     }
-    public void atualizarUsuario(dadosAtualizacaoUsuario dados){
+    public void atualizarUsuario(DadosAtualizacaoUsuario dados){
         if (dados.id() != null){
             this.id = dados.id();
         }

@@ -1,7 +1,7 @@
 package com.zelly.encomendas.encomendaszelly.model;
 
-import com.zelly.encomendas.encomendaszelly.service.produto.dadosAtualizacaoProduto;
-import com.zelly.encomendas.encomendaszelly.service.produto.dadosCadastroProduto;
+import com.zelly.encomendas.encomendaszelly.service.produto.DadosAtualizacaoProduto;
+import com.zelly.encomendas.encomendaszelly.service.produto.DadosCadastroProduto;
 import com.zelly.encomendas.encomendaszelly.service.produto.tamanhoRoupa;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,11 +13,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class produtoEntity {
+public class ProdutoEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    // TODO: 02/11/2023  o tamanho deve ser um enum
     @Enumerated(EnumType.STRING)
     private tamanhoRoupa tamanho;
     private Double valor;
@@ -27,14 +26,14 @@ public class produtoEntity {
     @JoinColumn(name = "encomenda_id")
     private encomendaEntity encomenda;
 **/
-    public produtoEntity(dadosCadastroProduto dados) {
+    public ProdutoEntity(DadosCadastroProduto dados) {
         this.nome = dados.nome();
         this.tamanho = dados.tamanho();
         this.valor = dados.valor();
         this.quantidadeEmEstoque = dados.quantidadeEmEstoque();
     }
 
-    public void atualizarInformacoes(dadosAtualizacaoProduto dados) {
+    public void atualizarInformacoes(DadosAtualizacaoProduto dados) {
         if(dados.id() != null){
             this.id = dados.id();
         }

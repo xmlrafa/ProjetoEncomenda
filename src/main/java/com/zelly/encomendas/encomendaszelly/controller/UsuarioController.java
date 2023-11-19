@@ -1,9 +1,9 @@
 package com.zelly.encomendas.encomendaszelly.controller;
 
-import com.zelly.encomendas.encomendaszelly.model.usuarioEntity;
+import com.zelly.encomendas.encomendaszelly.model.UsuarioEntity;
 import com.zelly.encomendas.encomendaszelly.repository.usuarioRepository;
 import com.zelly.encomendas.encomendaszelly.service.usuario.UsuarioService;
-import com.zelly.encomendas.encomendaszelly.service.usuario.dadosAtualizacaoUsuario;
+import com.zelly.encomendas.encomendaszelly.service.usuario.DadosAtualizacaoUsuario;
 import com.zelly.encomendas.encomendaszelly.service.usuario.dadosCadastroUsuario;
 import com.zelly.encomendas.encomendaszelly.service.usuario.dadosDetalhamentoUsuario;
 import jakarta.transaction.Transactional;
@@ -28,8 +28,8 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<usuarioEntity>> listarUsuarios() {
-        List<usuarioEntity> usuarios = usuarioService.listarTodos();
+    public ResponseEntity<List<UsuarioEntity>> listarUsuarios() {
+        List<UsuarioEntity> usuarios = usuarioService.listarTodos();
         return ResponseEntity.ok(usuarios);
     }
 
@@ -42,14 +42,14 @@ public class UsuarioController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<usuarioEntity> excluirUsuario(@PathVariable Long id, Authentication authentication) {
+    public ResponseEntity<UsuarioEntity> excluirUsuario(@PathVariable Long id, Authentication authentication) {
         usuarioService.excluirUsuario(id, authentication);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping()
     @Transactional
-    public ResponseEntity<dadosDetalhamentoUsuario> atualizarUsuario(@RequestBody dadosAtualizacaoUsuario dados, Authentication authentication) {
+    public ResponseEntity<dadosDetalhamentoUsuario> atualizarUsuario(@RequestBody DadosAtualizacaoUsuario dados, Authentication authentication) {
         var usuario = usuarioService.atualizarUsuario(dados, authentication);
         return ResponseEntity.ok(usuario);
     }

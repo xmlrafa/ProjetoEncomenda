@@ -23,7 +23,7 @@ public class LogEntity {
 
     @ManyToOne
     @JsonIgnoreProperties("log")
-    private usuarioEntity usuario;
+    private UsuarioEntity usuario;
 
     private String entidade;
 

@@ -1,10 +1,10 @@
 package com.zelly.encomendas.encomendaszelly.service.produto;
 
-import com.zelly.encomendas.encomendaszelly.model.produtoEntity;
+import com.zelly.encomendas.encomendaszelly.model.ProdutoEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record dadosCadastroProduto(
+public record DadosCadastroProduto(
         @NotBlank
         String nome,
         @NotNull
@@ -12,7 +12,7 @@ public record dadosCadastroProduto(
         @NotNull
         Double valor,
         Long quantidadeEmEstoque) {
-    public dadosCadastroProduto(produtoEntity produto) {
+    public DadosCadastroProduto(ProdutoEntity produto) {
         this(produto.getNome(), produto.getTamanho(), produto.getValor(), produto.getQuantidadeEmEstoque());
     }
 }

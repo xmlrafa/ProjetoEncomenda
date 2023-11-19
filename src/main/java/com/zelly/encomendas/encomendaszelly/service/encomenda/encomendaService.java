@@ -2,11 +2,11 @@ package com.zelly.encomendas.encomendaszelly.service.encomenda;
 
 import com.zelly.encomendas.encomendaszelly.model.clienteEntity;
 import com.zelly.encomendas.encomendaszelly.model.encomendaEntity;
-import com.zelly.encomendas.encomendaszelly.model.produtoEntity;
-import com.zelly.encomendas.encomendaszelly.model.usuarioEntity;
+import com.zelly.encomendas.encomendaszelly.model.ProdutoEntity;
+import com.zelly.encomendas.encomendaszelly.model.UsuarioEntity;
 import com.zelly.encomendas.encomendaszelly.repository.clienteRepository;
 import com.zelly.encomendas.encomendaszelly.repository.encomendaRepository;
-import com.zelly.encomendas.encomendaszelly.repository.produtoRepository;
+import com.zelly.encomendas.encomendaszelly.repository.ProdutoRepository;
 import com.zelly.encomendas.encomendaszelly.repository.usuarioRepository;
 import com.zelly.encomendas.encomendaszelly.service.encomenda.validacoes.validadorEncomenda;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,7 +24,7 @@ public class encomendaService {
     @Autowired
     private encomendaRepository encomendaRepository;
     @Autowired
-    private produtoRepository produtoRepository;
+    private ProdutoRepository produtoRepository;
     @Autowired
     private clienteRepository clienteRepository;
 
@@ -38,12 +38,12 @@ public class encomendaService {
         clienteEntity cliente = clienteRepository.findById(encomenda.getCliente().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com o ID" + encomenda.getCliente().getId()));
 
-        usuarioEntity usuario = usuarioRepository.findById(userId)
+        UsuarioEntity usuario = usuarioRepository.findById(userId)
                 .orElseThrow(()-> new EntityNotFoundException("Usuario nao encontrado com o ID" + userId));
 
-        List<produtoEntity> produtos = new ArrayList<>();
-        for (produtoEntity produto:encomenda.getProdutos()){
-            produtoEntity produtoExistente = produtoRepository.findById(produto.getId())
+        List<ProdutoEntity> produtos = new ArrayList<>();
+        for (ProdutoEntity produto:encomenda.getProdutos()){
+            ProdutoEntity produtoExistente = produtoRepository.findById(produto.getId())
                     .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o ID: "+ produto.getId()));
             produtos.add(produtoExistente);
         }
@@ -72,9 +72,9 @@ public class encomendaService {
         clienteEntity cliente = clienteRepository.findById(encomenda.getCliente().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com o ID" + encomenda.getCliente().getId()));
 
-        List<produtoEntity> produtos = new ArrayList<>();
-        for (produtoEntity produto:encomenda.getProdutos()){
-            produtoEntity produtoExistente = produtoRepository.findById(produto.getId())
+        List<ProdutoEntity> produtos = new ArrayList<>();
+        for (ProdutoEntity produto:encomenda.getProdutos()){
+            ProdutoEntity produtoExistente = produtoRepository.findById(produto.getId())
                     .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o ID: "+ produto.getId()));
             produtos.add(produtoExistente);
         }
