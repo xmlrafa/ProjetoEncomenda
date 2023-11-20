@@ -35,10 +35,10 @@ public class UsuarioEntity implements UserDetails {
 
     @Embedded
     @JsonIgnore
-    private transient enderecoEntity endereco;
+    private transient EnderecoEntity endereco;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private transient List<encomendaEntity> encomendas;
+    private transient List<EncomendaEntity> encomendas;
 
     @Override
     @JsonIgnore

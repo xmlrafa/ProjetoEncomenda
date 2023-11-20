@@ -1,7 +1,7 @@
 package com.zelly.encomendas.encomendaszelly.controller;
 
 import com.zelly.encomendas.encomendaszelly.model.UsuarioEntity;
-import com.zelly.encomendas.encomendaszelly.repository.usuarioRepository;
+import com.zelly.encomendas.encomendaszelly.repository.UsuarioRepository;
 import com.zelly.encomendas.encomendaszelly.service.usuario.UsuarioService;
 import com.zelly.encomendas.encomendaszelly.service.usuario.DadosAtualizacaoUsuario;
 import com.zelly.encomendas.encomendaszelly.service.usuario.dadosCadastroUsuario;
@@ -17,12 +17,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
-    private usuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     private UsuarioService usuarioService;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService, usuarioRepository usuarioRepository) {
+    public UsuarioController(UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
         this.usuarioService = usuarioService;
         this.usuarioRepository = usuarioRepository;
     }

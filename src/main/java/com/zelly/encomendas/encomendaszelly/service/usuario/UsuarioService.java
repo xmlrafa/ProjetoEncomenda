@@ -1,7 +1,7 @@
 package com.zelly.encomendas.encomendaszelly.service.usuario;
 
 import com.zelly.encomendas.encomendaszelly.model.UsuarioEntity;
-import com.zelly.encomendas.encomendaszelly.repository.usuarioRepository;
+import com.zelly.encomendas.encomendaszelly.repository.UsuarioRepository;
 import com.zelly.encomendas.encomendaszelly.service.log.LogService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +12,10 @@ import java.util.List;
 
 @Service
 public class UsuarioService {
-    private final usuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
     private final LogService logService;
     @Autowired
-    public UsuarioService(usuarioRepository usuarioRepository, LogService logService) {
+    public UsuarioService(UsuarioRepository usuarioRepository, LogService logService) {
         this.usuarioRepository = usuarioRepository;
         this.logService = logService;
     }

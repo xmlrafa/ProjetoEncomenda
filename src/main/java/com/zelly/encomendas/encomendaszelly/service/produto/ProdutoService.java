@@ -3,7 +3,7 @@ package com.zelly.encomendas.encomendaszelly.service.produto;
 import com.zelly.encomendas.encomendaszelly.model.ProdutoEntity;
 import com.zelly.encomendas.encomendaszelly.model.UsuarioEntity;
 import com.zelly.encomendas.encomendaszelly.repository.ProdutoRepository;
-import com.zelly.encomendas.encomendaszelly.repository.usuarioRepository;
+import com.zelly.encomendas.encomendaszelly.repository.UsuarioRepository;
 import com.zelly.encomendas.encomendaszelly.service.log.LogService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
@@ -14,9 +14,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class ProdutoService {
     private final ProdutoRepository produtoRepository;
     private final LogService logService;
-    private final usuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository, LogService logService, usuarioRepository usuarioRepository){
+    public ProdutoService(ProdutoRepository produtoRepository, LogService logService, UsuarioRepository usuarioRepository){
         this.produtoRepository = produtoRepository;
         this.logService = logService;
         this.usuarioRepository = usuarioRepository;

@@ -1,6 +1,6 @@
 package com.zelly.encomendas.encomendaszelly.controller;
 
-import com.zelly.encomendas.encomendaszelly.model.clienteEntity;
+import com.zelly.encomendas.encomendaszelly.model.ClienteEntity;
 import com.zelly.encomendas.encomendaszelly.repository.clienteRepository;
 import com.zelly.encomendas.encomendaszelly.service.cliente.clienteService;
 import com.zelly.encomendas.encomendaszelly.service.cliente.dadosAtualizacaoCliente;
@@ -40,7 +40,7 @@ public class clienteController {
     public ResponseEntity cadastrar(@RequestBody @Valid dadosCadastroCliente dados, UriComponentsBuilder uriBuilder){
         // TODO: 18/11/2023 adicionar aqui o retorno do authentication para salvar no log
         clienteService.salvar(dados);
-        var cliente = new clienteEntity(dados);
+        var cliente = new ClienteEntity(dados);
         var uri = uriBuilder.path("/cliente/{id}").buildAndExpand(cliente.getId()).toUri();
 
         return ResponseEntity.created(uri).body(new dadosCadastroCliente(cliente));

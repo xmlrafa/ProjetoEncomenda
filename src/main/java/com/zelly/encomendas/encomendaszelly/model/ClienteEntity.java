@@ -7,8 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.List;
-
 @Table(name = "clientes")
 @Entity(name = "clienteEntity")
 @Getter
@@ -16,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class clienteEntity {
+public class ClienteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,9 +26,9 @@ public class clienteEntity {
 
 
     @Embedded
-    private enderecoEntity endereco;
+    private EnderecoEntity endereco;
 
-    public clienteEntity(dadosCadastroCliente dados) {
+    public ClienteEntity(dadosCadastroCliente dados) {
         this.nomeCliente = dados.nome();
         this.endereco = dados.endereco();
     }

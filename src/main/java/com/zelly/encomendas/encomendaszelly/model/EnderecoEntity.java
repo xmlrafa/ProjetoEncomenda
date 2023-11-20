@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class enderecoEntity {
+public class EnderecoEntity {
 
     /**
      * eu consigo conectar a uma api do correios para

@@ -1,7 +1,7 @@
 package com.zelly.encomendas.encomendaszelly.service.encomenda.validacoes;
 
-import com.zelly.encomendas.encomendaszelly.model.encomendaEntity;
+import com.zelly.encomendas.encomendaszelly.model.EncomendaEntity;
 
 public interface validadorEncomenda {
-    void validar(encomendaEntity encomenda);
+    void validar(EncomendaEntity encomenda);
 }

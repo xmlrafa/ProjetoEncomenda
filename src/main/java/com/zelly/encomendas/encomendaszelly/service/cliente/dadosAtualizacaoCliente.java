@@ -1,7 +1,7 @@
 package com.zelly.encomendas.encomendaszelly.service.cliente;
 
-import com.zelly.encomendas.encomendaszelly.model.enderecoEntity;
+import com.zelly.encomendas.encomendaszelly.model.EnderecoEntity;
 
-public record dadosAtualizacaoCliente (Long id, String nome, enderecoEntity endereco){
+public record dadosAtualizacaoCliente (Long id, String nome, EnderecoEntity endereco){
 
 }

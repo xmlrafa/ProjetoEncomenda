@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class encomendaEntity {
+public class EncomendaEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,13 +26,13 @@ public class encomendaEntity {
     private LocalDateTime dataPedido;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime dataPrevisaoEntrega;
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime dataEntrega;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     @JsonIgnoreProperties("encomendas")
-    private clienteEntity cliente;
+    private ClienteEntity cliente;
 
     @ManyToMany()
     private List<ProdutoEntity> produtos;
@@ -41,20 +41,20 @@ public class encomendaEntity {
     @JsonIgnoreProperties("encomendas")
     private UsuarioEntity usuario;
 
-       public encomendaEntity(){
+       public EncomendaEntity(){
         this.status = Status.ABERTO;
         this.dataPedido = LocalDateTime.now();
         this.dataPrevisaoEntrega = dataPedido.plusDays(1);
 
 
     }
-    public encomendaEntity(clienteEntity cliente, List<ProdutoEntity> produtos){
+    public EncomendaEntity(ClienteEntity cliente, List<ProdutoEntity> produtos){
         this.cliente = cliente;
         this.produtos = produtos;
     }
 
 
-    public encomendaEntity(encomendaEntity encomendaAtualizada) {
+    public EncomendaEntity(EncomendaEntity encomendaAtualizada) {
            this.id = encomendaAtualizada.getId();
            this.produtos = encomendaAtualizada.getProdutos();
            this.dataEntrega = encomendaAtualizada.getDataEntrega();

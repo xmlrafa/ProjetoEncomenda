@@ -1,19 +1,16 @@
 package com.zelly.encomendas.encomendaszelly.service.cliente;
 
-import com.zelly.encomendas.encomendaszelly.model.clienteEntity;
-import com.zelly.encomendas.encomendaszelly.model.encomendaEntity;
-import com.zelly.encomendas.encomendaszelly.model.enderecoEntity;
+import com.zelly.encomendas.encomendaszelly.model.ClienteEntity;
+import com.zelly.encomendas.encomendaszelly.model.EnderecoEntity;
 import jakarta.validation.constraints.NotBlank;
-
-import java.util.List;
 
 public record dadosCadastroCliente(
         @NotBlank
         String nome,
         @NotBlank
-        enderecoEntity endereco){
+        EnderecoEntity endereco){
 
-    public dadosCadastroCliente(clienteEntity cliente) {
+    public dadosCadastroCliente(ClienteEntity cliente) {
         this(cliente.getNomeCliente(), cliente.getEndereco());
     }
 }
